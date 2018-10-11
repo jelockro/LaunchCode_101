@@ -8,6 +8,15 @@ module.exports = [{
   module: {
     rules: [
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['preset-env'],
+          plugins: ['transform-object-assign']
+        }
+      },
+      {
         test: /\.scss$/,
         use: [
           {
