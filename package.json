@@ -20,6 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.1.2",
     "@material/button": "^0.40.1",
+    "@material/ripple": "^0.40.1",
     "autoprefixer": "^9.1.5",
     "babel-loader": "^8.0.4",
     "babel-plugin-transform-object-assign": "^6.22.0",
