@@ -12,7 +12,7 @@ module.exports = [{
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['preset-env'],
+          presets: ['env'],
           plugins: ['transform-object-assign']
         }
       },
