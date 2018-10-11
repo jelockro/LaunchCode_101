@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/jelockro/html-me-something#readme",
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "@material/button": "^0.40.1",
     "autoprefixer": "^9.1.5",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-transform-object-assign": "^6.22.0",
+    "babel-preset-env": "^1.7.0",
     "css-loader": "^1.0.0",
     "extract-loader": "^3.0.0",
     "file-loader": "^2.0.0",
