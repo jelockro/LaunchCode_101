@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/jelockro/html-me-something#readme",
   "devDependencies": {
+    "@material/button": "^0.40.1",
     "css-loader": "^1.0.0",
     "extract-loader": "^3.0.0",
     "file-loader": "^2.0.0",
