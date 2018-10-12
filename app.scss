@@ -1,4 +1,6 @@
 @import "@material/button/mdc-button";
+@import "@material/drawer/mdc-drawer";
+@import "@material/list/mdc-list";
 
 .foo-button {
 	@include mdc-button-ink-color(teal);
