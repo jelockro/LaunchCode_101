@@ -8,7 +8,7 @@
   <body>
 
     
-    <aside class="mdc-drawer mdc-drawer--dismissible">
+    <aside class="mdc-drawer mdc-drawer--modal">
       <div class="mdc-drawer__content">
         <nav class="mdc-list">
           <a class="mdc-list-item mdc-list-item--activated" href="#" aria-selected="true">
@@ -27,8 +27,10 @@
       </div>
     </aside>
 
+    <div class="mdc-drawer-scrim"></div>
     <div class="mdc-drawer-app-content">
-      <header class="mdc-top-app-bar mdc-top-app-bar--fixed" id="app-bar">
+
+      <header class="mdc-top-app-bar app-bar" id="app-bar">
         <div class="mdc-top-app-bar__row">
           <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
             <a href="#" class="material-icons mdc-top-app-bar__navigation-icon">menu</a>
@@ -41,20 +43,16 @@
           </section>
         </div>
       </header>
-
+    
       <main class="main-content" id="main-content">
         <div class="mdc-top-app-bar--fixed-adjust">
-        App Content
+          App Content
+          <button class="foo-button mdc-button">
+            Josh Lockrow
+          </button>
         </div>
-        <button class="foo-button mdc-button">
-        Josh Lockrow
-        </button>
-
       </main>
-    
     </div>
-
-
     <script src="bundle.js" async></script>
   </body>
 </html>
