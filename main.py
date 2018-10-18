@@ -1,7 +1,8 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 import helpers
 from caesar import encrypt
 
+import cgi
 import os
 import jinja2
 
@@ -11,20 +12,17 @@ app = Flask(__name__)
 app.config['DEBUG'] = True
 
 
-
-
-
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/")
 def index():
     template = jinja_env.get_template('form.html')
     return template.render()
 
-''' def encrpyt():
-    if request.method == 'POST':
-        rot = request.form.get['rot']
-        text = request.form['textarea']
-        encryptedText = encrypt(text, rot)
-    return  
-'''
+@app.route("/", methods=['POST'])
+def caesar(): 
+    rot = int(request.form.get('rot', 0))
+    text = request.form.get('text', '')
+    encryptedText = encrypt(text, rot)
+    template = jinja_env.get_template('form.html')
+    return template.render(text=encryptedText)
 
 app.run()
