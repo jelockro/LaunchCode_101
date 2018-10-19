@@ -1,6 +1,3 @@
-import '../sass/app.scss';
-import React from "react";
-import ReactDOM from "react-dom";
 import {MDCRipple} from "@material/ripple/index";
 const ripple = new MDCRipple(document.querySelector('.foo-button'));
 
@@ -23,16 +20,3 @@ listEl.addEventListener('click', (event) => {
 document.body.addEventListener('MDCDrawer:closed', () => {
   mainContentEl.querySelector('input, button').focus();
 });
-
-
-class Layout extends React.Component {
-	render() {
-		return (
-			<h1>It's Working!</h1>
-		);
-	}
-}
-
-const app = document.getElementById('app');
-
-ReactDOM.render(<Layout/>, app)
