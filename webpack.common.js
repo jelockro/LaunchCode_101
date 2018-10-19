@@ -25,7 +25,7 @@ module.exports = {
 	        exclude: /node_modules/,
 	        loader: 'babel-loader',
 	        query: {
-	          presets: ['@babel/env'],
+	          presets: ['@babel/env', '@babel/preset-react'],
 	          plugins: ['transform-object-assign']
 	        }
 	      },
