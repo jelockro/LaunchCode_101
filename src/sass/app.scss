@@ -1,11 +1,19 @@
+$mdc-theme-primary: #424250;
+$mdc-theme-secondary: #045d56;
+$mdc-theme-on-primary: #000000;
+$mdc-theme-on-secondary: #ffffff;
+$mdc-theme-background: #424250;
+
+
 @import "@material/button/mdc-button";
-@import "@material/drawer/mdc-drawer";
 @import "@material/list/mdc-list";
 @import "@material/top-app-bar/mdc-top-app-bar";
+@import "drawer";
+@import "main_content";
 
 .foo-button {
-	@include mdc-button-ink-color(teal);
-	@include mdc-states(teal);
+  @include mdc-button-ink-color(teal);
+  @include mdc-states(teal);
 }
 
 body {
@@ -19,10 +27,6 @@ body {
   overflow: auto;
 }
 
-.main-content {
-  overflow: auto;
-  height: 100%;
-}
 
 .app-bar {
   position: absolute;

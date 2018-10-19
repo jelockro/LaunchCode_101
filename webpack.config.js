@@ -1,9 +1,11 @@
 const autoprefixer = require('autoprefixer');
+const path = require('path');
 
 module.exports = [{
-  entry: ['./app.scss', './app.js'],
+  entry: ['./src/sass/app.scss', './src/js/app.js'],
   output: {
-    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js'
   },
   module: {
     rules: [
@@ -12,7 +14,7 @@ module.exports = [{
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['@babel/preset-env'],
+          presets: ['@babel/env'],
           plugins: ['transform-object-assign']
         }
       },

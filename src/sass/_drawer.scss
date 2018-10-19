@@ -1,0 +1,5 @@
+@import "@material/drawer/mdc-drawer";
+
+.mdc-drawer {
+	@include mdc-drawer-fill-color-accessible(#424250)
+}
