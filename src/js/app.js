@@ -2,6 +2,7 @@ import '../sass/app.scss';
 import React from "react";
 import ReactDOM from "react-dom";
 import {MDCRipple} from "@material/ripple/index";
+import Layout from "./components/Layout";
 const ripple = new MDCRipple(document.querySelector('.foo-button'));
 
 import {MDCDrawer} from "@material/drawer/index";
@@ -25,17 +26,7 @@ document.body.addEventListener('MDCDrawer:closed', () => {
 });
 
 
-class Layout extends React.Component {
-	constructor() {
-		super();
-		this.name= "will";
-	}
-	render() {
-		return (
-			<h1>It's {this.name}!</h1>
-		);
-	}
-}
+
 
 const app = document.getElementById('app');
 
