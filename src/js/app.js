@@ -26,9 +26,13 @@ document.body.addEventListener('MDCDrawer:closed', () => {
 
 
 class Layout extends React.Component {
+	constructor() {
+		super();
+		this.name= "will";
+	}
 	render() {
 		return (
-			<h1>It's Working!</h1>
+			<h1>It's {this.name}!</h1>
 		);
 	}
 }
