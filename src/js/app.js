@@ -3,6 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import {MDCRipple} from "@material/ripple/index";
 import Layout from "./components/Layout";
+import Header from "./components/Header";
 const ripple = new MDCRipple(document.querySelector('.foo-button'));
 
 import {MDCDrawer} from "@material/drawer/index";
@@ -27,7 +28,8 @@ document.body.addEventListener('MDCDrawer:closed', () => {
 
 
 
-
+const header = document.getElementById('app-bar');
 const app = document.getElementById('app');
 
-ReactDOM.render(<Layout/>, app)
+ReactDOM.render(<Header/>, header);
+ReactDOM.render(<Layout/>, app);
