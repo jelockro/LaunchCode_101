@@ -1,5 +1,7 @@
 from flask import Flask, request, redirect, render_template
 import cgi
+import os
+import jinja2
 
 app = Flask(__name__)
 
@@ -16,7 +18,7 @@ terrible_movies = [
 
 def get_current_watchlist():
     # returns user's current watchlist--hard coded for now
-    return [ "Star Wars", "Minions", "Freaky Friday", "My Favorite Martian" ]
+    return ['Star Wars', 'Indiana Jones', 'Goonies', 'LOTR']
 
 
 @app.route("/crossoff", methods=['POST'])
@@ -55,7 +57,7 @@ def add_movie():
     # TODO:
     # Create a template called add-confirmation.html inside your /templates directory
     # Use that template to render the confirmation message instead of this temporary message below
-    return "Confirmation Message Under Construction..."
+    return render_template('add-confirmation.html', movie= new_movie_escaped)
 
 # TODO:
 # Modify the edit.html file to display the watchlist in an unordered list with bullets in front of each movie.
