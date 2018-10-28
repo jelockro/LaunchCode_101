@@ -6,7 +6,10 @@
   </head>
   <body>
     <h1>Signup</h1>
-    <form method="POST">
+    {% if error %}
+        <p class='error'>{{ error }}</p>
+    {% endif %}
+    <form action="/signup" method="POST">
         <table>
             <tbody>
                 <tr>
