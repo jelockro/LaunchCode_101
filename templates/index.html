@@ -5,11 +5,44 @@
     <title>Sign-up</title>
   </head>
   <body>
-    <form>
-        <input type="text" label="Username" name="Username">
-        <input type="text" label="Password" name="Password">
-        <input type="text" label="Verify Password" name="Verify Password">
-        <input type="text" label="Email(optional)" name="Email(optional)">
+    <h1>Signup</h1>
+    <form method="POST">
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        <label>Username</label>
+                    </td>
+                    <td>
+                        <input type="text" aria-labelledby="Username" name="Username"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Password</label>
+                    </td>
+                    <td>
+                        <input type="text" aria-labelledby="Password" name="Password"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Verify Password</label>
+                    </td>
+                    <td>
+                        <input type="text" aria-labelledby="Verify Password" name="Verify Password"><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <label>Email(Optional)</label>
+                    </td>
+                    <td>
+                        <input type="text" aria-labelledby="Email (optional)" name="Email (optional)"><br>
+                    </td>
+                </tr>          
+            </tbody>
+        </table>
         <input type="submit">
     </form>
    
