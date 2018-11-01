@@ -15,3 +15,5 @@ def index():
         tasks.append(task)
 
     return render_template('todos.html', title="TODOs")
+
+app.run()
