@@ -8,7 +8,7 @@ app.config['DEBUG'] = True
 tasks =[]
 
 @app.route('/todos', methods=['POST', 'GET'])
-def todos():
+def index():
 
     if request.method == 'POST':
         task = request.form['task']
