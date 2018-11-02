@@ -40,7 +40,8 @@ def index():
 def delete_task():
     task_id = int(request.form['task-id'])
     task = Task.query.get(task_id)
-    db.session.delete(task)
+    task.completed = True
+    db.session.add(task)
     db.session.commit()
 
     return redirect('/')
