@@ -2,6 +2,7 @@ from flask import Flask, request, redirect, render_template
 import cgi
 import os
 import jinja2
+from flask_sqlalchemy import SQLAlchemy
 
 app =Flask(__name__)
 app.config['DEBUG'] = True
