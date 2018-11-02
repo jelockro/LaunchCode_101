@@ -19,13 +19,19 @@ class Task(db.Model):
     def __init__(self, name):
         self.name = name
 
+
+
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
-        task = request.form['task']
-        tasks.append(task)
-
+        task_name = request.form['task']
+        new_task = Task(task_name)
+        db.session.add(new_task)
+        db.session.commit()
+    
+    tasks = Task.query.all()
+    
     return render_template('todos.html', title="Get It Done", tasks=tasks)
 
 if __name__ == "__main__":
