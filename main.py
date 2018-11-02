@@ -41,6 +41,8 @@ def delete_task():
     db.session.delete()
     db.session.commit()
 
+    return redirect('/')
+
 
 
 if __name__ == "__main__":
