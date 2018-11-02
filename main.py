@@ -2,7 +2,7 @@ from flask import Flask, request, redirect, render_template
 import cgi
 import os
 
-app=Flask(__name__
+app =Flask(__name__)
 app.config['DEBUG'] = True
 
 tasks =[]
@@ -14,6 +14,6 @@ def index():
         task = request.form['task']
         tasks.append(task)
 
-    return render_template('todos.html', title="TODOs")
+    return render_template('todos.html', title="Get It Done", tasks=tasks)
 
 app.run()
