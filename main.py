@@ -32,7 +32,7 @@ def index():
         db.session.add(new_task)
         db.session.commit()
     
-    tasks = Task.query.all()
+    tasks = Task.query.filter_by(completed=False).all()
     
     return render_template('todos.html', title="Get It Done", tasks=tasks)
 
