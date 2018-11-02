@@ -33,8 +33,11 @@ def index():
         db.session.commit()
     
     tasks = Task.query.filter_by(completed=False).all()
+    completed_tasks = Task.query.filter_by(completed=True).all()
+
+
     
-    return render_template('todos.html', title="Get It Done", tasks=tasks)
+    return render_template('todos.html', title="Get It Done", tasks=tasks completed_tasks=completed_tasks)
 
 @app.route('/delete-task', methods=['POST'])
 def delete_task():
