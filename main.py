@@ -11,7 +11,7 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
-class Blog(db.Model):
+class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(256))
@@ -27,20 +27,20 @@ blogs = []
 def index():
 
     if request.method == 'POST':
-        blog_title = request.form['title']
-        blog_body = request.form['body']
-        new_blog = Blog(blog_title, blog_body)
-        db.session.add(new_blog)
+        post_title = request.form['title']
+        post_body = request.form['body']
+        new_post = Blog(blog_title, blog_body)
+        db.session.add(new_post)
         db.session.commit()
-        return redirect('/blogs')
+        return redirect('/blog')
     else:
         return render_template('blog_form.html', title="Buld a Blog!")
 
-@app.route('/blogs', methods=['POST', 'GET'])
-def blogs():
-    blogs = Blog.query.all()
+@app.route('/blog', methods=['POST', 'GET'])
+def blog():
+    posts = Post.query.all()
     print('blogs: ', blogs)
-    return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
+    return render_template('posts.html',title="Build a Blog!", pots=posts)
 
 if __name__ == "__main__":
     app.run()
