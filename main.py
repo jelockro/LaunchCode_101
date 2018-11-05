@@ -10,7 +10,7 @@ def index():
 
     if request.method == 'POST':
         blog = request.form['blog']
-        blogs.append(task)
+        blogs.append(blog)
 
     return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
