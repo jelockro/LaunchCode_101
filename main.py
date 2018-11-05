@@ -3,16 +3,16 @@ from flask import Flask, request, redirect, render_template
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-tasks = []
+blogs = []
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
-        task = request.form['task']
-        tasks.append(task)
+        blog = request.form['blog']
+        blogs.append(task)
 
-    return render_template('todos.html',title="Get It Done!", tasks=tasks)
+    return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
 
 app.run()
