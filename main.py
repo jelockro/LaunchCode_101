@@ -16,8 +16,9 @@ class Blog(db.Model):
     title = db.Column(db.String(120))
     body = db.Column(db.String(256))
 
-    def __init__(self, title):
+    def __init__(self, title, body):
         self.title = title
+        self.body = body
 
 
 blogs = []
@@ -26,14 +27,18 @@ blogs = []
 def index():
 
     if request.method == 'POST':
-        blog_title = request.form['blog']
+        blog_title = request.form['title']
+        blog_body = request.form['body']
+        new_blog = Blog(blog_title, blog_body)
         db.session.add(new_blog)
-        return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
+        db.session.commit()
+        return render_template('blogs.html',title="Build a Blog!")
     else:
         return render_template('blog_form.html', title="Buld a Blog!")
 
 @app.route('/blogs', methods=['POST', 'GET'])
 def blogs():
+    blogs = Blog.query.all()
     return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
 if __name__ == "__main__":
