@@ -45,10 +45,10 @@ def index():
         new_post = Post(post_title, post_body)
         db.session.add(new_post)
         db.session.commit()
-
-        return redirect('/blog')
+        post_id = new_post.id
+        return redirect('/post?post_id=' + str(post_id))
     else:
-        return render_template('blog_form.html', title="Build a Blog!")
+        return render_template('blog_form.html')
 
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/blog', methods=['POST', 'GET'])
