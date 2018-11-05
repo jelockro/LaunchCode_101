@@ -12,8 +12,13 @@ app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
 
+class Blog(db.model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(120))
+    body = db.Column(db.String(256))
 
-
+    def __init__(self, title):
+        self.title = title
 
 
 blogs = []
@@ -27,5 +32,5 @@ def index():
 
     return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
-
-app.run()
+if __name__ == "__main__":
+    app.run()
