@@ -32,13 +32,14 @@ def index():
         new_blog = Blog(blog_title, blog_body)
         db.session.add(new_blog)
         db.session.commit()
-        return render_template('blogs.html',title="Build a Blog!")
+        return redirect('/blogs')
     else:
         return render_template('blog_form.html', title="Buld a Blog!")
 
 @app.route('/blogs', methods=['POST', 'GET'])
 def blogs():
     blogs = Blog.query.all()
+    print('blogs: ', blogs)
     return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
 if __name__ == "__main__":
