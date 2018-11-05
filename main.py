@@ -54,8 +54,23 @@ def index():
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     posts = Post.query.all()
-    print('blogs: ', blogs)
-    return render_template('blog.html',title="Build a Blog!", posts=posts)
+    
+    if request.args:
+        print('request.args: ', request.args)
+        post_id = request.args.get("post_id")
+        print('post_id: ', post_id)
+        return redirect('/post?post_id=' + post_id)
+
+
+    return render_template('blog.html', posts=posts)
+
+@app.route('/post')
+def post():
+    post_id = request.args.get("post_id")
+    post = Post.query.get(post_id)
+    
+    return render_template('post_template.html', post=post)
+
 
 if __name__ == "__main__":
     app.run()
