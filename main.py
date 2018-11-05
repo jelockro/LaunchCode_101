@@ -26,9 +26,14 @@ blogs = []
 def index():
 
     if request.method == 'POST':
-        blog = request.form['blog']
-        blogs.append(blog)
+        blog_title = request.form['blog']
+        db.session.add(new_blog)
+        return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
+    else:
+        return render_template('blog_form.html', title="Buld a Blog!")
 
+@app.route('/blogs', methods=['POST', 'GET'])
+def blogs():
     return render_template('blogs.html',title="Build a Blog!", blogs=blogs)
 
 if __name__ == "__main__":
