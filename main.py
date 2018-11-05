@@ -23,24 +23,24 @@ class Post(db.Model):
 
 blogs = []
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/newpost', methods=['POST', 'GET'])
 def index():
 
     if request.method == 'POST':
         post_title = request.form['title']
         post_body = request.form['body']
-        new_post = Blog(blog_title, blog_body)
+        new_post = Post(post_title, post_body)
         db.session.add(new_post)
         db.session.commit()
         return redirect('/blog')
     else:
         return render_template('blog_form.html', title="Buld a Blog!")
-
+@app.route('/', methods=['POST', 'GET'])
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
     posts = Post.query.all()
     print('blogs: ', blogs)
-    return render_template('posts.html',title="Build a Blog!", pots=posts)
+    return render_template('blog.html',title="Build a Blog!", posts=posts)
 
 if __name__ == "__main__":
     app.run()
