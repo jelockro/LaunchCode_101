@@ -13,6 +13,7 @@ flask = "*"
 sqlalchemy = "*"
 pymysql = "*"
 flask-sqlalchemy = "*"
+pylint = "*"
 
 [requires]
-python_version = "3.7"
+python_version = "3.65"
