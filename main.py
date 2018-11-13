@@ -32,6 +32,13 @@ class User(db.Model):
         self.username = username
         self.password = password
 
+@app.before_request
+def require_login():
+    if 'username' not in session:
+        return redirect('/login')
+
+
+
 blogs = []
 
 @app.route('/newpost', methods=['POST', 'GET'])
@@ -89,23 +96,23 @@ def login():
     database_error = ''
     errors = []
     if request.method == 'POST':
-        esc_username = cgi.escape(request.form['username'])
-        print('esc_username:', esc_username)
-        if esc_username == '':
+        username = cgi.escape(request.form['username'])
+        print('username:', username)
+        if username == '':
             username_error = "Username cannot be left blank"
             errors.append(username_error)
         
         
-        esc_password = cgi.escape(request.form['password'])
-        if esc_password == '':
+        password = cgi.escape(request.form['password'])
+        if password == '':
             password_error = "Password cannot be left blank"
             errors.append(password_error)
-        user = User.query.filter_by(username=esc_username).first()
+        user = User.query.filter_by(username=username).first()
         print('user: ', user)
         if user:
             print('if user passed on none')
         if user and user.password == pasword:
-            print('is it really a success?')
+            session['username'] = username
             return render_template('success.html')
         if not user:
             database_error = 'User is not in database. Please Register.'
@@ -117,6 +124,11 @@ def login():
         return render_template("success.html")
     else:
         return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    del session['username']
+    return redirect('/login')
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
