@@ -118,19 +118,23 @@ def login():
     else:
         return render_template('login.html')
 @app.route('/', methods=['POST', 'GET'])
-@app.route('/signup')
+@app.route('/signup', methods=['POST', 'GET'])
 def signup():
+
     if request.method == 'POST':
-        username = request.form['Username']
-        password = request.form['Password']
-        
-        email = request.form['Email (optional)']
-        verify = request.form['Verify Password']
+        username_error = ''    
+        password_error = ''
+        database_error = ''
+        errors = []
+        username = cgi.escape(request.form['Username'])
+        password = cgi.escape(request.form['Password'])
+        email = cgi.escape(request.form['Email (optional)'])
+        verify = cgi.escape(request.form['Verify Password'])
         errors =[]
         print('password:', password)
         print('verfiy:', verify)
         print('email:', email)
-        redirectString='/?'
+        redirectString='/signup?'
         if username == '':
             usernameError = "Username Cannot be Left Blank"
             errors.append('usernameError=' + usernameError)
@@ -140,6 +144,7 @@ def signup():
         if len(username) > 20 :
             usernameError = "Username Must Be Shorter than 20 Characters"
             errors.append('usernameError=' + usernameError)
+
         if password == '':
             passwordError = "passwordError=Password Cannot Be Left Blank"
             errors.append(passwordError)
@@ -166,6 +171,13 @@ def signup():
                 emailError = "Email must contaion only one '.'"
             if emailError != '':
                 errors.append('uiEmail=' + emailError)
+        
+        existing_user = User.query.filter_by(username=username).first()
+        if existing_user:
+            database_error = 'User already in Database.'
+            errors.append('databaseError=' + database_error)
+        if not existing_user:
+            new_user = User(username,password)
         if errors:
             print('errors =', errors)
             redirectString= redirectString + '&'.join(errors)
@@ -175,17 +187,19 @@ def signup():
         else:
             return render_template('success.html', username=username)
     else:
+        databaseErrorArg = request.args.get("databaseError", '')
+        databaseErrror = databaseErrorArg
         UsernameValue = request.args.get("usernameError", '')
-        uiUsername = UsernameValue
-        print('UsernameValue=', UsernameValue)
+        UsernameError = UsernameValue
+
         PasswordValue = request.args.get("passwordError", '')
-        uiPassword = PasswordValue
-        print('PasswordValue=', PasswordValue)
-        VerifyValue = request.args.get("verifyError", '')
-        print('VerifyValue=', VerifyValue)
+        PasswordError = PasswordValue
+
+        VerifyError = request.args.get("verifyError", '')
+        
         uiEmail = request.args.get("uiEmail",'')
-        print('uiEmail=', uiEmail)
-        return render_template('signup.html', UsernameValue=UsernameValue, PasswordValue=PasswordValue, VerifyValue=VerifyValue, uiPassword=uiPassword, uiEmail=uiEmail)
+   
+        return render_template('signup.html', databaseErrror=databaseErrror, UsernameError=UsernameError, PasswordError=PasswordError, VerifyError=VerifyError, uiEmail=uiEmail)
 
 
 if __name__ == "__main__":
