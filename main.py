@@ -82,9 +82,32 @@ def post():
     
     return render_template('post_template.html', post=post)
 
-@app.route('/login')
+@app.route('/login', methods=['POST', 'GET'])
 def login():
-    return render_template('login.html')
+    username_error = ''    
+    password_error = ''
+    errors = []
+    if request.method == 'POST':
+        esc_username = cgi.escape(request.form['username'])
+        if esc_username == '':
+            username_error = "Username cannot be left blank"
+            errors.append(username_error)
+        
+        esc_password = cgi.escape(request.form['password'])
+        if esc_password == '':
+            password_error = "Password cannot be left blank"
+            errors.append(password_error)
+        
+        if errors:
+            return render_template("login.html", username=esc_username, username_error=username_error, password_error=password_error )
+        
+        new_post = Post(post_title, post_body)
+        db.session.add(new_post)
+        db.session.commit()
+        post_id = new_post.id
+        return redirect('/post?post_id=' + str(post_id))
+    else:
+        return render_template('login.html')
 @app.route('/signup')
 def signup():
     return render_template('signup.html')
