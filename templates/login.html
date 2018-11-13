@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+    .error {color: red; font-style:italic}
+    </style>
+    <form method='post'>
+        <label>
+            Username:
+            
+        </label><br>
+        <input type="text" name='username' style="display: inline-block" value="{{ username }}" /><br>
+        <p class="error">{{ username_error }}</p>
+        <div>
+            <label >Password</label><br>
+            <input type="text" name='password'>{{password}}</textarea><br>
+            <p class="error">{{ password_error }}</p>
+            <input type="submit" value='login' />
+        </div>
+    </form>
+
+
+
+{% endblock %}
