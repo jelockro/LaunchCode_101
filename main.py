@@ -15,7 +15,7 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(120))
     body = db.Column(db.String(256))
-    owner_id = db.Column(db.Integer, db.ForeignKey('owner.id'), nullable=False)
+    owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
     def __init__(self, title, body, owner):
         self.title = title
@@ -26,7 +26,7 @@ class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
     username = db.Column(db.String(120))
     password = db.Column(db.String(120))
-    posts = db.relationship('Post', backref='owner', lazy=True) 
+    posts = db.relationship('Post', backref='owner') 
 
     def __init__(self, username, password):
         self.username = username
@@ -82,6 +82,10 @@ def post():
     
     return render_template('post_template.html', post=post)
 
+@app.route('/login')
+    return render_template('login.html')
+@app.route('/signup')
+    return render_template('signup.html')
 
 if __name__ == "__main__":
     app.run()
