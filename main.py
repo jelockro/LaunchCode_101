@@ -86,31 +86,107 @@ def post():
 def login():
     username_error = ''    
     password_error = ''
+    database_error = ''
     errors = []
     if request.method == 'POST':
         esc_username = cgi.escape(request.form['username'])
+        print('esc_username:', esc_username)
         if esc_username == '':
             username_error = "Username cannot be left blank"
             errors.append(username_error)
+        
         
         esc_password = cgi.escape(request.form['password'])
         if esc_password == '':
             password_error = "Password cannot be left blank"
             errors.append(password_error)
-        
+        user = User.query.filter_by(username=esc_username).first()
+        print('user: ', user)
+        if user:
+            print('if user passed on none')
+        if user and user.password == pasword:
+            print('is it really a success?')
+            return render_template('success.html')
+        if not user:
+            database_error = 'User is not in database. Please Register.'
+            errors.append(database_error)
+        print('errors: ', errors)
         if errors:
-            return render_template("login.html", username=esc_username, username_error=username_error, password_error=password_error )
+            return render_template("login.html", username=esc_username, database_error=database_error, username_error=username_error, password_error=password_error )
         
-        new_post = Post(post_title, post_body)
-        db.session.add(new_post)
-        db.session.commit()
-        post_id = new_post.id
-        return redirect('/post?post_id=' + str(post_id))
+        return render_template("success.html")
     else:
         return render_template('login.html')
+@app.route('/', methods=['POST', 'GET'])
 @app.route('/signup')
 def signup():
-    return render_template('signup.html')
+    if request.method == 'POST':
+        username = request.form['Username']
+        password = request.form['Password']
+        
+        email = request.form['Email (optional)']
+        verify = request.form['Verify Password']
+        errors =[]
+        print('password:', password)
+        print('verfiy:', verify)
+        print('email:', email)
+        redirectString='/?'
+        if username == '':
+            usernameError = "Username Cannot be Left Blank"
+            errors.append('usernameError=' + usernameError)
+        if len(username) < 3 :
+            usernameError = "Username Must be Longer Than 3 Characters"
+            errors.append('usernameError=' + usernameError)
+        if len(username) > 20 :
+            usernameError = "Username Must Be Shorter than 20 Characters"
+            errors.append('usernameError=' + usernameError)
+        if password == '':
+            passwordError = "passwordError=Password Cannot Be Left Blank"
+            errors.append(passwordError)
+        if password != verify:
+            verifyError = "Passwords Do Not Match"
+            errors.append('verifyError=' + verifyError)
+        if email:
+            emailError = ''
+            if '@' not in email:
+                emailError = "Email must contain '@'"
+    
+            elif '.' not in email:
+                emailError = "Email must contain one '.' "
+    
+            elif ' ' in email:
+                emailError = "Email cannot contain space"
+    
+            
+            periodCount = 0
+            for char in email:
+                if char == '.':
+                    periodCount += 1
+            if periodCount > 1:
+                emailError = "Email must contaion only one '.'"
+            if emailError != '':
+                errors.append('uiEmail=' + emailError)
+        if errors:
+            print('errors =', errors)
+            redirectString= redirectString + '&'.join(errors)
+            print('joinedRedirectString=', redirectString)
+            print('redirectString =', redirectString)
+            return redirect(redirectString)
+        else:
+            return render_template('success.html', username=username)
+    else:
+        UsernameValue = request.args.get("usernameError", '')
+        uiUsername = UsernameValue
+        print('UsernameValue=', UsernameValue)
+        PasswordValue = request.args.get("passwordError", '')
+        uiPassword = PasswordValue
+        print('PasswordValue=', PasswordValue)
+        VerifyValue = request.args.get("verifyError", '')
+        print('VerifyValue=', VerifyValue)
+        uiEmail = request.args.get("uiEmail",'')
+        print('uiEmail=', uiEmail)
+        return render_template('signup.html', UsernameValue=UsernameValue, PasswordValue=PasswordValue, VerifyValue=VerifyValue, uiPassword=uiPassword, uiEmail=uiEmail)
+
 
 if __name__ == "__main__":
     app.run()

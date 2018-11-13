@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Register to Blogz</h1>    
+{% if errors %}
+    {% for x in errors %}
+        <p class='error'>{{ x }}</p>
+    {% endfor %}
+{% endif %}
+<form action="/signup" method="POST">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <label>Username</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Username" name="Username" value={{uiUsername}} >
+                </td>
+                <td><p class="error">{{ UsernameValue }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Password</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Password" name="Password">
+                </td>
+                <td><p class="error">{{ PasswordValue }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Verify Password</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Verify Password" name="Verify Password"><br>
+                </td>
+                <td><p class="error">{{ VerifyValue }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email(Optional)</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Email (optional)" name="Email (optional)" value={{ uiEmail }}>
+                </td>
+                <td><p class="error">{{ uiEmail }}</p></td>
+                <br>
+                </td>
+            </tr>          
+        </tbody>
+    </table>
+    <input type="submit">
+</form>
+{% endblock %}
