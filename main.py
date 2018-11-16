@@ -84,15 +84,16 @@ def home():
 
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
-    
+    posts = []
     posts = Post.query.all()
     
     if request.args:
         user_id = request.args.get("user")
         print('user_id', user_id)
         if user_id:
-            posts = Post.query.filter_by(id=user_id).first() 
-            return redirect('/user_blog', posts=posts)
+            posts = Post.query.filter_by(owner_id=user_id).all() 
+            print('#######posts by user_id:', posts)
+            return render_template('user_blog.html', posts=posts)
 
         post_id = request.args.get("post_id")
         print('post_id: ', post_id)
