@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect, render_template, session
 from flask_sqlalchemy import SQLAlchemy
 import pymysql
 import cgi
@@ -10,6 +10,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+pymysql://blogz:user@localhost:88
 app.config['SQLALCHEMY_ECHO'] = True
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 db = SQLAlchemy(app)
+app.secret_key ='1225westsheridan'
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -17,10 +18,10 @@ class Post(db.Model):
     body = db.Column(db.String(256))
     owner_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, title, body, owner):
+    def __init__(self, title, body, owner_id):
         self.title = title
         self.body = body
-        self.owner = owner
+        self.owner_id = owner_id
 
 class User(db.Model):
     id = db.Column(db.Integer,primary_key=True)
@@ -34,8 +35,8 @@ class User(db.Model):
 
 @app.before_request
 def require_login():
-    allowed_routes = ['login', 'register']
-    if 'username' not in session:
+    allowed_routes = ['login', 'signup', 'blog', 'index']
+    if request.endpoint not in allowed_routes and 'username' not in session:
         return redirect('/login')
 
 
@@ -43,11 +44,18 @@ def require_login():
 blogs = []
 
 @app.route('/newpost', methods=['POST', 'GET'])
-def index():
+def newpost():
     title_error = ''    
     body_error = ''
     errors = []
+    #print(session)
+    #print(session['username'])
+    post_owner = User.query.filter_by(username=session['username']).first()
+    post_owner_id = post_owner.id
+    print(post_owner_id)
     if request.method == 'POST':
+        print(session)
+
         post_title = cgi.escape(request.form['title'])
         if post_title == '':
             title_error = "Please fill in the title"
@@ -57,11 +65,11 @@ def index():
         if post_body == '':
             body_error = "Please fill in the body"
             errors.append(body_error)
-        
+
         if errors:
             return render_template("blog_form.html", title=post_title, body=post_body, title_error=title_error, body_error=body_error )
         
-        new_post = Post(post_title, post_body)
+        new_post = Post(post_title, post_body, post_owner_id)
         db.session.add(new_post)
         db.session.commit()
         post_id = new_post.id
@@ -70,12 +78,22 @@ def index():
         return render_template('blog_form.html')
 
 @app.route('/', methods=['POST', 'GET'])
+def home():
+    users = User.query.all()
+    return render_template('index.html', users=users)
+
 @app.route('/blog', methods=['POST', 'GET'])
 def blog():
+    
     posts = Post.query.all()
     
     if request.args:
-        print('request.args: ', request.args)
+        user_id = request.args.get("user")
+        print('user_id', user_id)
+        if user_id:
+            posts = Post.query.filter_by(id=user_id).first() 
+            return redirect('/user_blog', posts=posts)
+
         post_id = request.args.get("post_id")
         print('post_id: ', post_id)
         return redirect('/post?post_id=' + post_id)
@@ -112,24 +130,26 @@ def login():
         print('user: ', user)
         if user:
             print('if user passed on none')
-        if user and user.password == pasword:
-            session['username'] = username
-            return render_template('success.html')
+            if user.password == password:
+                session['username'] = username
+                return redirect('/newpost')
+            else:
+                password_error = "This is not the password in our database"
+                errors.append(password_error)
         if not user:
             database_error = 'User is not in database. Please Register.'
             errors.append(database_error)
         print('errors: ', errors)
         if errors:
-            return render_template("login.html", username=esc_username, database_error=database_error, username_error=username_error, password_error=password_error )
-        
-        return render_template("success.html")
+            return render_template("login.html", username=username, database_error=database_error, username_error=username_error, password_error=password_error )
     else:
         return render_template('login.html')
 
 @app.route('/logout')
 def logout():
     del session['username']
-    return redirect('/login')
+    return redirect('/')
+
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/signup', methods=['POST', 'GET'])
 def signup():
@@ -189,16 +209,20 @@ def signup():
         if existing_user:
             database_error = 'User already in Database.'
             errors.append('databaseError=' + database_error)
+            return redirect(redirectString)
         if not existing_user:
+            print('we maded into the right loop')
             new_user = User(username,password)
+            db.session.add(new_user)
+            db.session.commit()
+            return render_template('success.html', username=username)
         if errors:
             print('errors =', errors)
             redirectString= redirectString + '&'.join(errors)
             print('joinedRedirectString=', redirectString)
             print('redirectString =', redirectString)
             return redirect(redirectString)
-        else:
-            return render_template('success.html', username=username)
+
     else:
         databaseErrorArg = request.args.get("databaseError", '')
         databaseErrror = databaseErrorArg

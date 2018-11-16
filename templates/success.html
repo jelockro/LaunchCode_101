@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Success</title>
-  </head>
-  <body>
-    <h1>Welcome {{ username }}</h1>
+{% extends "base.html" %}
 
-   
-  </body>
-</html>
+{% block content %}
+
+    <h1>Welcome {{ username }}</h1>
+    <a href="/login">Please Click Here to Login</a>
+{% endblock %} 
+
