@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask-sqlalchemy = "*"
+
+[dev-packages]
+flask = "*"
+"jinja2" = "*"
+flask-sqlalchemy = "*"
+pymysql = "*"
+
+[requires]
+python_version = "3.6"
