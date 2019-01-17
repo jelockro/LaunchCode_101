@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if posts|length == 0 %}
+<p>No tasks yet</p>
+{% else %}
+
+    <div>
+        {% for post in posts %}
+        <h1><a href="./blog?post_id={{post.id}}">{{post.title}}</a></h1>
+        <p>{{post.body}}</p>
+        <hr>
+        {% endfor %}
+    </div>
+
+{% endif %}
+
+{% endblock %}
