@@ -4,6 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+<<<<<<< HEAD
 flask = "*"
 "jinja2" = "*"
 
@@ -11,3 +12,12 @@ flask = "*"
 
 [requires]
 python_version = "3.5"
+=======
+"jinja2" = "*"
+
+[dev-packages]
+pylint = "*"
+
+[requires]
+python_version = "3.6"
+>>>>>>> flicklist/studio4
