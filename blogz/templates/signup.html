@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Register to Blogz</h1>    
+<style>
+        .error {color: red; font-style:italic}
+</style>
+{% if errors %}
+    {% for x in errors %}
+        <p class='error'>{{ x }}</p>
+    {% endfor %}
+{% endif %}
+
+<form action="/signup" method="POST">
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <p class="error">{{ databaseErrror }}</p>
+                </td>
+            
+            </tr>
+            <tr>
+                
+                <td>
+                    <label>Username</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Username" name="Username" value={{uiUsername}} >
+                </td>
+                <td><p class="error">{{ UsernameError }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Password</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Password" name="Password">
+                </td>
+                <td><p class="error">{{ PasswordError }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Verify Password</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Verify Password" name="Verify Password"><br>
+                </td>
+                <td><p class="error">{{ VerifyError }}</p></td>
+                <br>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email(Optional)</label>
+                </td>
+                <td>
+                    <input type="text" aria-labelledby="Email (optional)" name="Email (optional)" value={{ uiEmail }}>
+                </td>
+                <td><p class="error">{{ uiEmail }}</p></td>
+                <br>
+                </td>
+            </tr>          
+        </tbody>
+    </table>
+    <input type="submit">
+</form>
+{% endblock %}
