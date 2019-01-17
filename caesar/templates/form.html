@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style>
+            form {
+                background-color: #eee;
+                padding: 20px;
+                margin: 0 auto;
+                width: 540px;
+                font: 16px sans-serif;
+                border-radius: 10px;
+            }
+            textarea {
+                margin: 10px 0;
+                width: 540px;
+                height: 120px;
+            }
+        </style>
+    </head>
+    <body>
+      <!-- create your form here -->
+        <form action="/" id="usrform" method="POST">
+            <label for="rot">Rotate by: </label>
+            <input type="text" name="rot" value="0"><br>
+             <textarea name='text'rows="10" cols="70" form="usrform">{{text}}</textarea>
+            <input type="submit" value="Submit Request">
+        </form>
+       
+    </body>
+</html>
